@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Users List Page</title>
 </head>
 <body>
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
-</div>
+    <div th:each="user : ${usersList}">
+        <a th:href="@{/user/{id}(id=${user.getId()})}" th:text="${user.getId() + '. ' + user.getName() + ' ' + user.getLastName() + ', age ' + user.getAge()}"></a>
+<!--        <a th:href="show?id=user.getID()" th:text="${user.getId() + '. ' + user.getName() + ' ' + user.getLastName() + ', age ' + user.getAge()}"></a>-->
+    </div>
+</table>
 </body>
 </html>
