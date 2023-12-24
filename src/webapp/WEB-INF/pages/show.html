@@ -7,31 +7,29 @@
 </head>
 <body>
 <p th:text="'id = ' + ${user.getId()}">VALUE</p>
-<p th:text="'name = ' + ${user.getName()}">VALUE</p>
+<p th:text="'name = ' + ${user.getFirstName()}">VALUE</p>
 <p th:text="'lastName = ' + ${user.getLastName()}">VALUE</p>
-<p th:text="'age = ' + ${user.getAge()}">VALUE</p>
+<p th:text="'email = ' + ${user.getEmail()}">VALUE</p>
 
+<br/>
+<br/>
+<a href="/">
+    <button type="button">Home page</button>
+</a>
 
-<form action="/delete" method="post">
-    <input type="hidden" id="idToDelete" name="id" value="1"> <!-- Указать реальный ID пользователя для удаления -->
-    <button type="submit">Delete User</button>
-</form>
+<br/>
+<br/>
+<br/>
 
+<a th:href="@{/update(id=${user.getId()}, firstName=${user.getFirstName()}, lastName=${user.getLastName()}, email=${user.getEmail()})}">
+    <button type="button">Update</button>
+</a>
 
-
-<form action="/update" method="post">
-    <label for="id">ID:</label>
-    <input type="text" id="id" name="id" value="1" required> <!-- Указать реальный ID пользователя для обновления -->
-
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="Ivanov" required>
-
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" value="Ivan" required>
-
-    <label for="age">Age:</label>
-    <input type="text" id="age" name="age" value="26" required>
-
-    <button type="submit">Update User</button>
-</form>
+<br/>
+<br/>
+<br/>
+<a th:href="@{/delete(id=${user.getId()})}">
+    <button type="button">Delete</button>
+</a>
+</body>
 </html>

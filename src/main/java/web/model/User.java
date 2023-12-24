@@ -1,35 +1,44 @@
 package web.model;
+import javax.persistence.*;
 
+
+@Entity
+@Table(name = "user")
 public class User {
-    private long id;
-    private String name;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    private int age;
 
-    public User() {
-    }
+    @Column(name = "email")
+    private String email;
 
-    public User(long id, String name, String lastName, int age) {
-        this.id = id;
-        this.name = name;
+
+    public User() {}
+
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.email = email;
+
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -40,11 +49,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+
 }

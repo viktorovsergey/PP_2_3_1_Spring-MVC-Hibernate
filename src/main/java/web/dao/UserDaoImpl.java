@@ -1,32 +1,49 @@
 package web.dao;
 
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao{
-    List<User> usersList = new ArrayList<>();
 
-    public UserDaoImpl (){
-        usersList.add(new User(1,"Ivanov","Ivan",26));
-        usersList.add(new User(2,"Petrov","Petr",36));
-        usersList.add(new User(3,"Sidorov","Ivan",16));
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public UserDaoImpl() {
     }
-
-
     @Override
-    public List<User> usersList() {
-        return usersList;
+    public List<User> getAllUsers() {
+        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
     public User show(long id) {
-        return usersList.stream().filter(user -> user.getId()==id).findAny().orElse(null);
+        return entityManager.find(User.class,id);
     }
 
+    @Override
+    public void create (User user) {
+        entityManager.persist(user);
+    }
+
+    @Override
+    public void update(User updateUser) {
+
+    }
+
+    @Override
+    public void delUser(long id) {
+        entityManager.remove(entityManager.find(User.class,id));
+    }
 
 }

@@ -3,30 +3,59 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import web.dao.UserDao;
+import org.springframework.web.bind.annotation.*;
+import web.daoService.UserService;
+import web.model.User;
 
 @Controller
 @RequestMapping("/")
 public class UserController {
+    private final UserService userService;
 
-    private final UserDao userDao;
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
+
+
 
     @GetMapping()
-    public String usersList(Model model){
-        model.addAttribute("usersList",userDao.usersList());
+    public String usersList(Model model) {
+        model.addAttribute("usersList", userService.getAllUsers());
+        model.addAttribute("user", new User());
         return "index";
     }
+
     @GetMapping("user/{id}")
-    public String show(@PathVariable("id") long id, Model model){
-        model.addAttribute("user",userDao.show(id));
+    public String show(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.show(id));
         return "show";
     }
 
+    @PostMapping("/create")
+    public String create(@ModelAttribute("user") User user) {
+        userService.create(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/update")
+    public String update(@RequestParam("id") long userId,
+                         @RequestParam("name") String userFirstName,
+                         @RequestParam("lastName") String userLastName,
+                         @RequestParam("email") String userEmail,
+                         Model model) {
+     model.addAttribute("user", new User(userId, userFirstName, userLastName,userEmail));
+        return "update";
+    }
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute("user") User user) {
+        userService.update(user);
+        return "redirect:/";
+    }
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") long userId) {
+        userService.delUser(userId);
+        return "redirect:/";
+    }
 }
