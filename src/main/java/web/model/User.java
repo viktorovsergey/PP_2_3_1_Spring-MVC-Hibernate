@@ -1,4 +1,5 @@
 package web.model;
+
 import javax.persistence.*;
 
 
@@ -20,9 +21,11 @@ public class User {
     private String email;
 
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String firstName, String lastName, String email) {
+    public User(Long id, String firstName, String lastName, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

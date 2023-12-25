@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -36,8 +37,16 @@ public class UserDaoImpl implements UserDao{
         entityManager.persist(user);
     }
 
+
     @Override
-    public void update(User updateUser) {
+    public void update(long id, User updateUser) {
+        User user = entityManager.find(User.class,id);
+        if (user!=null){
+            user.setLastName(updateUser.getLastName());
+            user.setFirstName(updateUser.getFirstName());
+            user.setEmail(updateUser.getEmail());
+            entityManager.merge(user);
+        }
 
     }
 

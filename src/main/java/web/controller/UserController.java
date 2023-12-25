@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("/update")
     public String update(@RequestParam("id") long userId,
-                         @RequestParam("name") String userFirstName,
+                         @RequestParam("firstName") String userFirstName,
                          @RequestParam("lastName") String userLastName,
                          @RequestParam("email") String userEmail,
                          Model model) {
@@ -49,8 +49,8 @@ public class UserController {
         return "update";
     }
     @PostMapping("/edit")
-    public String edit(@ModelAttribute("user") User user) {
-        userService.update(user);
+    public String edit(@RequestParam("id") int id, @ModelAttribute("user") User user) {
+        userService.update(id, user);
         return "redirect:/";
     }
     @GetMapping("/delete")
